@@ -3,7 +3,7 @@
 Recipeek is a simple website designed to allow for users to upload, rate, and comment on recipes posted to the site. It makes use of HTML, CSS, JavaScript, and an AWS backend to store the content used by the site.
 
 ## Project Specification
-This section details the initial project specification broken into a few key sections including the theme, what the site will do, the target audience, the data managed by the site, and the stretch goals.
+This section details the initial project specification broken into a few key sub-sections including the theme, what the site will do, the target audience, the data managed by the site, and the stretch goals.
 
 ### Theme
 The general theme of this project is for the purpose of creating and sharing recipes. At the moment I'm mostly thinking about recipes for all types of food. The idea is to facilitate a community of people that share recipes that they have personally created or a family recipe that they wish to share with the rest of the world.
@@ -24,4 +24,4 @@ Another feature that would be useful would be some way to take a recipe and add 
 
 ## Project Wireframe
 
-![wireframe](RecipeekWireframe.png)
+![wireframe](RecipeekWireframe.PNG)
