@@ -1,4 +1,18 @@
-h1{
-  border-color: #d3e644;
-  border-style: dashed;
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box {
+  width: 80%;
+  padding: 15px;
+}
+
+.left {
+  margin-left: auto;
+}
+
+.home {
+  justify-self: left;
 }
