@@ -19,13 +19,40 @@
 
     </nav>
 
-    <form id="send-data">
+    <template id="ingredient-template">
+      <label for="ingredient-quantity{i}">Quantity: </label>
+      <input type="number" id="ingredient-quantity{i}" name="ingredient-quantity{i}" step="0.01" min="0.01" required>
+
+      <label for="ingredient-measurement{i}">Measurement: </label>
+      <select name="ingredient-measurement{i}" id="ingredient-measurement{i}" required>
+        <option value="Tsp">Tsp.</option>
+        <option value="Tbsp">Tbsp.</option>
+        <option value="FlOz">Fl. Oz.</option>
+        <option value="Cup">C.</option>
+        <option value="Pint">Pt.</option>
+        <option value="Quart">Qt.</option>
+        <option value="Gallon">Gal.</option>
+      </select>
+
+      <label for="ingredient-name{i}">Name: </label>
+      <input type="text" id="ingredient-name{i}" name="ingredient-name{i}" required>
+    </template>
+
+    <form id="recipe-data">
       <legend>Create New Recipe</legend>
       <label for="recipe-name">Recipe Name: </label>
       <input type="text" id="recipe-name" name="recipe-name" placeholder="Grandma's Cookies" required>
 
-      
+      <label for="recipe-instructions">Instructions: </label>
+      <textarea id="recipe-instructions" name="recipe-instructions" rows="4" cols="50" required></textarea>
+
+      <div id="recipe-ingredients">
+
+      </div>
+      <input class="submit-recipe" type="submit" value="Submit Recipe">
     </form>
+
+    <button type="button" id="add-ingredient">Add Ingredient</button>
 
     <script type="module" src="js/main.js"></script>
   </body>
