@@ -19,12 +19,12 @@
 
     </nav>
 
-    <template id="ingredient-template">
-      <label for="ingredient-quantity{i}">Quantity: </label>
-      <input type="number" id="ingredient-quantity{i}" name="ingredient-quantity{i}" step="0.01" min="0.01" required>
+    <template id="ingredientTemplate">
+      <label for="ingredientQuantity{i}">Quantity: </label>
+      <input type="number" id="ingredientQuantity{i}" name="ingredientQuantity{i}" step="0.01" min="0.01" required>
 
-      <label for="ingredient-measurement{i}">Measurement: </label>
-      <select name="ingredient-measurement{i}" id="ingredient-measurement{i}" required>
+      <label for="ingredientMeasurement{i}">Measurement: </label>
+      <select name="ingredientMeasurement{i}" id="ingredientMeasurement{i}" required>
         <option value="Tsp">Tsp.</option>
         <option value="Tbsp">Tbsp.</option>
         <option value="FlOz">Fl. Oz.</option>
@@ -34,25 +34,25 @@
         <option value="Gallon">Gal.</option>
       </select>
 
-      <label for="ingredient-name{i}">Name: </label>
-      <input type="text" id="ingredient-name{i}" name="ingredient-name{i}" required>
+      <label for="ingredientName{i}">Name: </label>
+      <input type="text" id="ingredientName{i}" name="ingredientName{i}" required>
     </template>
 
-    <form id="recipe-data">
+    <form id="recipeData">
       <legend>Create New Recipe</legend>
-      <label for="recipe-name">Recipe Name: </label>
-      <input type="text" id="recipe-name" name="recipe-name" placeholder="Grandma's Cookies" required>
+      <label for="recipeName">Recipe Name: </label>
+      <input type="text" id="recipeName" name="recipeName" placeholder="Grandma's Cookies" required>
 
-      <label for="recipe-instructions">Instructions: </label>
-      <textarea id="recipe-instructions" name="recipe-instructions" rows="4" cols="50" required></textarea>
+      <label for="recipeInstructions">Instructions: </label>
+      <textarea id="recipeInstructions" name="recipeInstructions" rows="4" cols="50" required></textarea>
 
-      <div id="recipe-ingredients">
+      <div id="recipeIngredients">
 
       </div>
-      <input class="submit-recipe" type="submit" value="Submit Recipe">
+      <input class="submitRecipe" type="submit" value="Submit Recipe">
     </form>
 
-    <button type="button" id="add-ingredient">Add Ingredient</button>
+    <button type="button" id="addIngredient">Add Ingredient</button>
 
     <script type="module" src="js/main.js"></script>
   </body>

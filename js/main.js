@@ -1,7 +1,10 @@
-const addIngredientButton = document.getElementById("add-ingredient");
-const recipeDataForm = document.getElementById("recipe-data");
-const ingredientTemplate = document.getElementById("ingredient-template");
-const recipeIngredients = document.getElementById("recipe-ingredients");
+const addIngredientButton = document.getElementById("addIngredient");
+const recipeDataForm = document.getElementById("recipeData");
+const ingredientTemplate = document.getElementById("ingredientTemplate");
+const recipeIngredients = document.getElementById("recipeIngredients");
+
+// TODO: Add function comments, add more pages, add recipe description,
+// make the first page only display the recipe name and description
 
 let counter = 0;
 
@@ -17,15 +20,50 @@ function addIngredient(event) {
     recipeIngredients.append(div);
 }
 
+// Credits: https://stackoverflow.com/questions/41431322/how-to-convert-formdata-html5-object-to-json/49826736#49826736
+function normalizeFormData(formElement) {
+    const entries = new FormData(formElement).entries();
+    let output = {};
+    let item = null;
+
+    while(item = entries.next().value) {
+        // Remove the unique number in the form ID (if it exists)
+        let key = item[0];
+        key = key.replace(/\d+/g, '');
+
+        let value = item[1];
+
+        // Check if the property already exists
+        if(Object.prototype.hasOwnProperty.call(output, key)) {
+
+            // If it's not an array already convert it to one
+            let current = output[key];
+            if(!Array.isArray(current)) {
+                current = output[key] = [current];
+            }
+
+            // Push the new value to the end of the array
+            current.push(value);
+        }
+        else {
+            output[key] = value;
+        }
+        
+    }
+
+    return output;
+}
+
 function submitRecipe(event) {
     event.preventDefault();
 
-    const formData = new FormData(this);
-    const xhr = new XMLHttpRequest();
+    let output = normalizeFormData(this);
 
-    // TODO: Convert formData to JSON with proper arrays for ingredients
-    // Perhaps create an object to represent an ingredient
-    let d = Object.fromEntries(formData);
+    const xhr = new XMLHttpRequest();
+    xhr.open("PUT", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify(output));
+
     this.reset();
 }
 
