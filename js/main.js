@@ -2,9 +2,33 @@ const addIngredientButton = document.getElementById("addIngredient");
 const recipeDataForm = document.getElementById("recipeData");
 const ingredientTemplate = document.getElementById("ingredientTemplate");
 const recipeIngredients = document.getElementById("recipeIngredients");
+const recipeDisplay = document.getElementById("recipeDisplay");
+const refreshButton = document.getElementById("refreshButton");
+
+function pageLoad() {
+    const xhr = new XMLHttpRequest();
+    xhr.addEventListener("load", function() {
+        const allRecipes = JSON.parse(xhr.response);
+        for(const recipe of allRecipes) {
+            let newLink = document.createElement("a");
+            newLink.setAttribute("href", "pages/recipe.html?recipe=" + recipe.recipeName);
+            newLink.innerText = recipe.recipeName;
+
+            recipeDisplay.appendChild(newLink);
+            recipeDisplay.appendChild(document.createElement("br"));
+        }
+    });
+
+    xhr.open("GET", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items");
+    xhr.send();
+}
+
+document.addEventListener("DOMContentLoaded", pageLoad);
 
 // TODO: Add function comments, add more pages, add recipe description,
-// make the first page only display the recipe name and description
+// make the first page only display the recipe name and description, add
+// ability to delete and edit recipes, add error handling for conflicting recipe name,
+// force the user to always have at least one ingredient for each recipe
 
 let counter = 0;
 
@@ -67,5 +91,10 @@ function submitRecipe(event) {
     this.reset();
 }
 
+function refresh() {
+    window.location.reload();
+}
+
+refreshButton.addEventListener("click", refresh);
 addIngredientButton.addEventListener("click", addIngredient);
 recipeDataForm.addEventListener("submit", submitRecipe);
