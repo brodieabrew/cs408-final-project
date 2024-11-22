@@ -1,6 +1,6 @@
 # Recipeek (CS408 Final Project)
 
-Recipeek is a simple website designed to allow for users to upload, rate, and comment on recipes posted to the site. It makes use of HTML, CSS, JavaScript, and an AWS backend to store the content used by the site.
+Recipeek is a simple website designed to allow for users to upload their own custom recipes to a site to share with the world. It makes use of HTML, CSS, JavaScript, and an AWS backend to store the content used by the site.
 
 ## Project Specification
 This section details the initial project specification broken into a few key sub-sections including the theme, what the site will do, the target audience, the data managed by the site, and the stretch goals.
