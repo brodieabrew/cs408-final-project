@@ -13,13 +13,37 @@
               <a>About</a>
             </div>
       
-          </nav>
+        </nav>
 
-        <h1>Recipe</h1>
+        <h1 id="recipeTitle"></h1>
+
+        <template id="ingredientTemplate">
+          <label for="ingredientQuantity{i}">Quantity: </label>
+          <input type="number" id="ingredientQuantity{i}" name="ingredientQuantity{i}" step="0.01" min="0.01" required>
+    
+          <label for="ingredientMeasurement{i}">Measurement: </label>
+          <select name="ingredientMeasurement{i}" id="ingredientMeasurement{i}" required>
+            <option value="Tsp">Tsp.</option>
+            <option value="Tbsp">Tbsp.</option>
+            <option value="FlOz">Fl. Oz.</option>
+            <option value="Cup">C.</option>
+            <option value="Pint">Pt.</option>
+            <option value="Quart">Qt.</option>
+            <option value="Gallon">Gal.</option>
+          </select>
+    
+          <label for="ingredientName{i}">Name: </label>
+          <input type="text" id="ingredientName{i}" name="ingredientName{i}" required>
+        </template>
 
         <article id="recipeInfo">
 
         </article>
+
+
+
+        <button type="button" id="recipeEdit">Edit</button>
+        <button type="button" id="recipeDelete">Delete</button>
 
         <script type="module" src="../js/recipe.js"></script>
     </body>

@@ -1,9 +1,7 @@
-const addIngredientButton = document.getElementById("addIngredient");
 const recipeDataForm = document.getElementById("recipeData");
-const ingredientTemplate = document.getElementById("ingredientTemplate");
-const recipeIngredients = document.getElementById("recipeIngredients");
 const recipeDisplay = document.getElementById("recipeDisplay");
-const refreshButton = document.getElementById("refreshButton");
+const createRecipe = document.getElementById("createRecipe");
+const cancelRecipe = document.getElementById("cancelRecipe");
 
 function pageLoad() {
     const xhr = new XMLHttpRequest();
@@ -25,10 +23,11 @@ function pageLoad() {
 
 document.addEventListener("DOMContentLoaded", pageLoad);
 
-// TODO: Add function comments, add more pages, add recipe description,
+// TODO: Add function comments, add more pages,
 // make the first page only display the recipe name and description, add
-// ability to delete and edit recipes, add error handling for conflicting recipe name,
-// force the user to always have at least one ingredient for each recipe
+// ability to delete and edit recipes,
+// force the user to always have at least one ingredient for each recipe,
+// add tests to test.js
 
 let counter = 0;
 
@@ -56,6 +55,7 @@ function normalizeFormData(formElement) {
         key = key.replace(/\d+/g, '');
 
         let value = item[1];
+        value = value.trim();
 
         // Check if the property already exists
         if(Object.prototype.hasOwnProperty.call(output, key)) {
@@ -78,23 +78,71 @@ function normalizeFormData(formElement) {
     return output;
 }
 
-function submitRecipe(event) {
+async function recipeExists(recipeName) {
+    const xhr = new XMLHttpRequest();
+
+    return new Promise(function(resolve) {
+        xhr.addEventListener("load", function() {
+            if(xhr.response.length !== 0) {
+                resolve(true);
+            }
+            else {
+                resolve(false);
+            }
+        });
+
+        xhr.open("GET", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items/" + recipeName);
+        xhr.send();
+    });
+}
+
+async function submitRecipe(event) {
     event.preventDefault();
 
     let output = normalizeFormData(this);
+    let exists = await recipeExists(output.recipeName);
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("PUT", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify(output));
+    if(exists) {
+        alert("A recipe with that name already exists!");
+    }
+    else {
+        const xhr = new XMLHttpRequest();
+        xhr.open("PUT", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(output));
+    
+        let newLink = document.createElement("a");
+        newLink.setAttribute("href", "pages/recipe.html?recipe=" + output.recipeName);
+        newLink.innerText = output.recipeName;
 
-    this.reset();
+        recipeDisplay.appendChild(newLink);
+        recipeDisplay.appendChild(document.createElement("br"));
+
+        this.reset();
+
+        recipeDataForm.setAttribute("hidden", true);
+        createRecipe.removeAttribute("hidden");
+    }
 }
 
-function refresh() {
-    window.location.reload();
-}
-
-refreshButton.addEventListener("click", refresh);
-addIngredientButton.addEventListener("click", addIngredient);
 recipeDataForm.addEventListener("submit", submitRecipe);
+
+function createRecipeClicked(event) {
+    event.preventDefault();
+
+    recipeDataForm.removeAttribute("hidden");
+    createRecipe.setAttribute("hidden", true);
+}
+
+createRecipe.addEventListener("click", createRecipeClicked);
+
+function cancelRecipeClicked(event) {
+    event.preventDefault();
+
+    recipeDataForm.setAttribute("hidden", true);
+    recipeDataForm.reset();
+
+    createRecipe.removeAttribute("hidden");
+}
+
+cancelRecipe.addEventListener("click", cancelRecipeClicked);
