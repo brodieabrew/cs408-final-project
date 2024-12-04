@@ -1,3 +1,5 @@
+import { normalizeFormData, recipeExists } from "./helper.js";
+
 const recipeDataForm = document.getElementById("recipeData");
 const recipeDisplay = document.getElementById("recipeDisplay");
 const createRecipe = document.getElementById("createRecipe");
@@ -24,77 +26,8 @@ function pageLoad() {
 document.addEventListener("DOMContentLoaded", pageLoad);
 
 // TODO: Add function comments, add more pages,
-// make the first page only display the recipe name and description, add
-// ability to delete and edit recipes,
-// force the user to always have at least one ingredient for each recipe,
-// add tests to test.js
-
-let counter = 0;
-
-// Credits: https://stackoverflow.com/a/69362263 
-function addIngredient(event) {
-    event.preventDefault();
-
-    let div = document.createElement("div");
-    div.classList.add("ingredient");
-    div.appendChild(ingredientTemplate.content.cloneNode(true));
-
-    div.innerHTML = div.innerHTML.replaceAll("{i}", ++counter);
-    recipeIngredients.append(div);
-}
-
-// Credits: https://stackoverflow.com/questions/41431322/how-to-convert-formdata-html5-object-to-json/49826736#49826736
-function normalizeFormData(formElement) {
-    const entries = new FormData(formElement).entries();
-    let output = {};
-    let item = null;
-
-    while(item = entries.next().value) {
-        // Remove the unique number in the form ID (if it exists)
-        let key = item[0];
-        key = key.replace(/\d+/g, '');
-
-        let value = item[1];
-        value = value.trim();
-
-        // Check if the property already exists
-        if(Object.prototype.hasOwnProperty.call(output, key)) {
-
-            // If it's not an array already convert it to one
-            let current = output[key];
-            if(!Array.isArray(current)) {
-                current = output[key] = [current];
-            }
-
-            // Push the new value to the end of the array
-            current.push(value);
-        }
-        else {
-            output[key] = value;
-        }
-        
-    }
-
-    return output;
-}
-
-async function recipeExists(recipeName) {
-    const xhr = new XMLHttpRequest();
-
-    return new Promise(function(resolve) {
-        xhr.addEventListener("load", function() {
-            if(xhr.response.length !== 0) {
-                resolve(true);
-            }
-            else {
-                resolve(false);
-            }
-        });
-
-        xhr.open("GET", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items/" + recipeName);
-        xhr.send();
-    });
-}
+// make the first page only display the recipe name and description
+// add tests to test.js, add styling
 
 async function submitRecipe(event) {
     event.preventDefault();
