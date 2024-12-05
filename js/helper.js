@@ -74,25 +74,37 @@ function addCard(recipeDisplay, recipe, link) {
 /**
  * Puts a recipe into the database.
  * @param {*} recipe The recipe to put into the database
+ * @returns {*} Returns the response body from putting the recipe into the database
  */
-function putRecipe(recipe) {
+async function putRecipe(recipe) {
     const xhr = new XMLHttpRequest();
-    xhr.open("PUT", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(recipe);
+    return new Promise(function(resolve) {
+        xhr.addEventListener("load", function() {
+            resolve(xhr.response);
+        });
+
+        xhr.open("PUT", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(recipe);
+    });
 }
 
 /**
  * Deletes a recipe from the database.
  * @param {String} recipeName The name of the recipe to delete
- * @param {*} callback A callback function for when deletion finishes
+ * @returns {*} Returns the response body from deleting the recipe from the database
  */
-function deleteRecipe(recipeName, callback) {
+async function deleteRecipe(recipeName) {
     const xhr = new XMLHttpRequest();
 
-    xhr.addEventListener("load", callback);
-    xhr.open("DELETE", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items/" + recipeName);
-    xhr.send();
+    return new Promise(function(resolve) {
+        xhr.addEventListener("load", function() {
+            resolve(xhr.response);
+        });
+
+        xhr.open("DELETE", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items/" + recipeName);
+        xhr.send();
+    });
 }
 
 /**
