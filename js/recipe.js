@@ -212,15 +212,14 @@ recipeEdit.addEventListener("click", recipeEditClicked);
  * Deletes the recipe from the server and redirects to the home page.
  * @param {Event} event An HTML event
  */
-function recipeDeleteClicked(event) {
+async function recipeDeleteClicked(event) {
     event.preventDefault();
 
     let res = confirm("Are you sure you want to delete this recipe?");
 
     if(res === true) {
-        deleteRecipe(recipe.recipeName, function() {
-            window.location.href = "/";
-        });
+        await deleteRecipe(recipe.recipeName);
+        window.location.href = "/";
     }
 }
 
