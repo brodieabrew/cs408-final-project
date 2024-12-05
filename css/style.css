@@ -59,6 +59,8 @@
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 20px;
+  padding: 10px;
+  background-color: azure;
 }
 
 .card:hover {
@@ -73,42 +75,19 @@
 
 .banner {
   position: fixed;
-  margin-left: 10px;
-  margin-right: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
   top: 0;
   right: 0;
   left: 0;
   z-index: 9999;
+  background-color: gainsboro;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 .title {
-  margin-top: 60px;
+  margin-top: 70px;
   margin-bottom: 30px;
-}
-
-.stickyBar {
-  display: block;
-  flex: 0 0 auto;
-  position: sticky;
-  top: 100px;
-  z-index: 9998;
-  width: 24%;
-  border: 1px solid black;
-}
-
-.mainContent {
-  flex: 0 0 auto;
-  width: 75%;
-}
-
-.bgBlue {
-  background-color: lightblue;
-}
-
-.bgTan {
-  background-color: tan;
 }
 
 h1 {
@@ -116,19 +95,50 @@ h1 {
   font-size: 50px;
 }
 
-.borderHeader {
-  border: 1px solid black;
-  border-left: none;
-  padding-top: 15px;
-  padding-bottom: 15px;
+.popupOverlay {
+  display: none;
+  position: absolute;
+  z-index: 100000;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.ingredientHeader {
-  border-bottom: 1px solid black;
-  padding-top: 15px;
-  padding-bottom: 15px;
+/* Credits: https://stackoverflow.com/a/25829529 */
+.centerFixed {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.formPopup {
+  height: auto;
+  width: 50%;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  overflow-y: scroll;
 }
 
 h3 {
   font-weight: 500;
+}
+
+button, input[type="submit"] {
+  height: 3em;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  margin: 2px;
+}
+
+button:hover, input[type="submit"]:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }

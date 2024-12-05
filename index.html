@@ -7,6 +7,7 @@
     <meta name="description" content="The leading site for sharing and finding recipes!">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/index.css">
   </head>
 
   <body>
@@ -35,24 +36,31 @@
     </div>
 
     <div class="content">
-      <section class="cardContainer" id="recipeDisplay">
-      </section>
-  
-      <form id="recipeData" hidden>
-        <legend>New Recipe</legend>
-  
-        <label for="recipeName">Recipe Name: </label>
-        <input type="text" id="recipeName" name="recipeName" placeholder="Grandma's Cookies" required>
-        <label for="recipeDescription">Description: </label>
-        <textarea id="recipeDescription" name="recipeDescription" rows="2" cols="20" required></textarea>
-  
-        <input class="submitRecipe" type="submit" value="Confirm">
-        <button type="button" id="cancelRecipe">Cancel</button>
-      </form>
+      <div class="cardContainer" id="recipeDisplay">
+      </div>
   
       <button type="button" id="createRecipe">New Recipe</button>
     </div>
 
+    <div id="recipePopup" class="popupOverlay">
+      <div class="centerFixed">
+        <div class="container">
+          <div class="formPopup">
+            <form id="recipeData" class="formElements">
+              <legend>New Recipe</legend>
+        
+              <label for="recipeName">Recipe Name: </label>
+              <input type="text" id="recipeName" name="recipeName" placeholder="Grandma's Cookies" required>
+              <label for="recipeDescription">Description: </label>
+              <textarea id="recipeDescription" name="recipeDescription" rows="2" cols="20" required></textarea>
+        
+              <input class="submitRecipe" type="submit" value="Confirm">
+              <button type="button" id="cancelRecipe">Cancel</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script type="module" src="js/main.js"></script>
   </body>

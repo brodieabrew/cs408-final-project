@@ -5,6 +5,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/recipe.css">
 
     <body>
       <nav class="banner">
@@ -41,15 +42,18 @@
 
         <div class="mainContent">
           <h2 class="center bgBlue borderHeader">Instructions</h2>
-          <p id="instructions"></p>
+          <p id="instructions" class="instructions"></p>
         </div>
 
-        <div>
+        <div class="container justifyLeft">
           <h3>Tags:</h3>
-          <ul id="tags">
+          <ul id="tags" class="tags">
 
           </ul>
         </div>
+
+        <button type="button" id="recipeEdit">Edit</button>
+        <button type="button" id="recipeDelete">Delete</button>
       </div>
 
       <template id="ingredientTemplate">
@@ -65,43 +69,50 @@
         <button id="ingredientDelete{i}" type="button">Delete</button>
       </template>
 
-      <form id="recipeData" hidden>
-        <legend>Edit Recipe</legend>
-        <label for="recipeName">Recipe Name: </label>
-        <input type="text" id="recipeName" name="recipeName" readonly>
-  
-        <label for="recipeDescription">Description: </label>
-        <textarea id="recipeDescription" name="recipeDescription" rows="2" cols="20" required></textarea>
+      
 
-        <label for="recipeInstructions">Instructions: </label>
-        <textarea id="recipeInstructions" name="recipeInstructions" rows="4" cols="50" required></textarea>
-  
-        <div id="recipeIngredients">
-  
+      <div id="recipePopup" class="popupOverlay">
+        <div class="centerFixed">
+          <div class="container">
+            <div class="formPopup">
+              <form id="recipeData">
+                <legend>Edit Recipe</legend>
+                <label for="recipeName">Recipe Name: </label>
+                <input type="text" id="recipeName" name="recipeName" readonly>
+          
+                <label for="recipeDescription">Description: </label>
+                <textarea id="recipeDescription" name="recipeDescription" rows="2" cols="20" required></textarea>
+        
+                <label for="recipeInstructions">Instructions: </label>
+                <textarea id="recipeInstructions" name="recipeInstructions" rows="2" cols="20" required></textarea>
+          
+                <div id="recipeIngredients">
+          
+                </div>
+        
+                <!-- Allow dynamic tag inputs in the future -->
+                <label for="recipeTags">Tags: </label>
+                <select id="recipeTags" name="recipeTags" multiple required>
+                  <option value="Baking">Baking</option>
+                  <option value="Cooking">Cooking</option>
+                  <option value="Grilling">Grilling</option>
+                  <option value="Sweet">Sweet</option>
+                  <option value="Savory">Savory</option>
+                  <option value="Short">Short Duration</option>
+                  <option value="Medium">Medium Duration</option>
+                  <option value="Long">Long Duration</option>
+                  <option value="Cheap">Cheap</option>
+                  <option value="Expensive">Expensive</option>
+                </select>
+        
+                <button type="button" id="addIngredient">Add Ingredient</button>
+                <input class="submitRecipe" type="submit" value="Confirm">
+                <button type="button" id="cancelRecipe">Cancel</button>
+              </form>
+            </div>
+          </div>
         </div>
-
-        <!-- Allow dynamic tag inputs in the future -->
-        <label for="recipeTags">Tags: </label>
-        <select id="recipeTags" name="recipeTags" multiple required>
-          <option value="Baking">Baking</option>
-          <option value="Cooking">Cooking</option>
-          <option value="Grilling">Grilling</option>
-          <option value="Sweet">Sweet</option>
-          <option value="Savory">Savory</option>
-          <option value="Short">Short Duration</option>
-          <option value="Medium">Medium Duration</option>
-          <option value="Long">Long Duration</option>
-          <option value="Cheap">Cheap</option>
-          <option value="Expensive">Expensive</option>
-        </select>
-
-        <button type="button" id="addIngredient">Add Ingredient</button>
-        <input class="submitRecipe" type="submit" value="Confirm">
-        <button type="button" id="cancelRecipe">Cancel</button>
-      </form>
-
-      <button type="button" id="recipeEdit">Edit</button>
-      <button type="button" id="recipeDelete">Delete</button>
+      </div>
 
       <script type="module" src="../js/recipe.js"></script>
     </body>

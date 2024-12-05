@@ -1,0 +1,53 @@
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.stickyBar {
+    display: block;
+    flex: 0 0 auto;
+    position: sticky;
+    top: 100px;
+    z-index: 9998;
+    width: 24%;
+    border: 1px solid black;
+  }
+
+.bgBlue {
+    background-color: lightblue;
+  }
+  
+.bgTan {
+    background-color: tan;
+}
+
+.mainContent {
+    flex: 0 0 auto;
+    width: 75%;
+}
+
+.borderHeader {
+    border: 1px solid black;
+    border-left: none;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  
+.ingredientHeader {
+    border-bottom: 1px solid black;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.justifyLeft {
+    align-content: flex-start;
+    margin-right: auto;
+    padding-left: 1px;
+}
+
+.tags {
+    list-style-type: none;
+}
+
+.instructions {
+    padding-left: 3px;
+}

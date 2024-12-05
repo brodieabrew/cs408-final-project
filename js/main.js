@@ -5,6 +5,7 @@ const recipeDisplay = document.getElementById("recipeDisplay");
 const createRecipe = document.getElementById("createRecipe");
 const cancelRecipe = document.getElementById("cancelRecipe");
 const recipeTitle = document.getElementById("recipeTitle");
+const recipePopup = document.getElementById("recipePopup");
 
 let recipeCount = 0;
 
@@ -46,8 +47,7 @@ async function submitRecipe(event) {
 
         this.reset();
 
-        recipeDataForm.setAttribute("hidden", true);
-        createRecipe.removeAttribute("hidden");
+        recipePopup.style.display = "none";
     }
 }
 
@@ -60,8 +60,7 @@ recipeDataForm.addEventListener("submit", submitRecipe);
 function createRecipeClicked(event) {
     event.preventDefault();
 
-    recipeDataForm.removeAttribute("hidden");
-    createRecipe.setAttribute("hidden", true);
+    recipePopup.style.display = "block";
 }
 
 createRecipe.addEventListener("click", createRecipeClicked);
@@ -73,10 +72,8 @@ createRecipe.addEventListener("click", createRecipeClicked);
 function cancelRecipeClicked(event) {
     event.preventDefault();
 
-    recipeDataForm.setAttribute("hidden", true);
+    recipePopup.style.display = "none";
     recipeDataForm.reset();
-
-    createRecipe.removeAttribute("hidden");
 }
 
 cancelRecipe.addEventListener("click", cancelRecipeClicked);

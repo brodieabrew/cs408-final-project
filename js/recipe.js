@@ -10,8 +10,8 @@ const addIngredient = document.getElementById("addIngredient");
 const ingredientTemplate = document.getElementById("ingredientTemplate");
 const recipeIngredients = document.getElementById("recipeIngredients");
 const ingredients = document.getElementById("ingredients");
-const recipeTags = document.getElementById("recipeTags");
 const tags = document.getElementById("tags");
+const recipePopup = document.getElementById("recipePopup"); 
 
 let recipe = null;
 
@@ -167,7 +167,7 @@ function confirmRecipeClicked(event) {
     const output = normalizeFormData(this);
     putRecipe(JSON.stringify(output));
 
-    recipeData.setAttribute("hidden", true);
+    recipePopup.style.display = "none";
     this.reset();
 
     tags.innerHTML = "";
@@ -176,9 +176,6 @@ function confirmRecipeClicked(event) {
     recipe = output;
 
     filloutPage();
-
-    recipeEdit.removeAttribute("hidden");
-    recipeDelete.removeAttribute("hidden");
 }
 
 recipeData.addEventListener("submit", confirmRecipeClicked);
@@ -190,13 +187,9 @@ recipeData.addEventListener("submit", confirmRecipeClicked);
 function cancelRecipeClicked(event) {
     event.preventDefault();
 
-    recipeData.setAttribute("hidden", true);
+    recipePopup.style.display = "none";
     recipeData.reset();
-
     recipeIngredients.innerHTML = "";
-
-    recipeEdit.removeAttribute("hidden");
-    recipeDelete.removeAttribute("hidden");
 }
 
 cancelRecipe.addEventListener("click", cancelRecipeClicked);
@@ -210,9 +203,7 @@ function recipeEditClicked(event) {
 
     filloutForm();
 
-    recipeEdit.setAttribute("hidden", true);
-    recipeDelete.setAttribute("hidden", true);
-    recipeData.removeAttribute("hidden");
+    recipePopup.style.display = "block";
 }
 
 recipeEdit.addEventListener("click", recipeEditClicked);
