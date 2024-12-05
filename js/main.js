@@ -40,7 +40,7 @@ async function submitRecipe(event) {
         alert("A recipe with that name already exists!");
     }
     else {
-        putRecipe(JSON.stringify(output));
+        await putRecipe(JSON.stringify(output));
     
         recipeTitle.innerText = `${++recipeCount} Food Recipes`;
         addCard(recipeDisplay, output, "/pages/recipe.html?recipe=");
@@ -77,3 +77,5 @@ function cancelRecipeClicked(event) {
 }
 
 cancelRecipe.addEventListener("click", cancelRecipeClicked);
+
+export{recipeDataForm, createRecipe, cancelRecipe, recipeDisplay, recipePopup, pageLoad, submitRecipe, createRecipeClicked, cancelRecipeClicked};

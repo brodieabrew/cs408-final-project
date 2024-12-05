@@ -17,6 +17,7 @@ function normalizeFormData(formElement) {
         let key = item[0];
         key = key.replace(/\d+/g, '');
 
+        // Trim whitespace before and after the value (the database doesn't like it)
         let value = item[1];
         value = value.trim();
 
