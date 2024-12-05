@@ -1,4 +1,4 @@
-import { normalizeFormData } from "./helper.js";
+import { normalizeFormData, putRecipe, deleteRecipe, getAllRecipes, getRecipe } from "./helper.js";
 
 const recipeEdit = document.getElementById("recipeEdit");
 const recipeDelete = document.getElementById("recipeDelete");
@@ -74,13 +74,22 @@ function filloutPage() {
  * Adds a new ingredient to the recipe form.
  * @param {number} id A number representing part of the ingredient ID
  */
-function newIngredient(id) {
+function newIngredient(id, quantity, measurement, name) {
     let div = document.createElement("div");
     div.classList.add("ingredient");
     div.appendChild(ingredientTemplate.content.cloneNode(true));
 
     div.innerHTML = div.innerHTML.replaceAll("{i}", id);
     recipeIngredients.append(div);
+
+    const ingredientQuantity = document.getElementById(`ingredientQuantity${id}`);
+    ingredientQuantity.value = quantity;
+
+    const ingredientMeasurement = document.getElementById(`ingredientMeasurement${id}`);
+    ingredientMeasurement.value = measurement;
+
+    const ingredientName = document.getElementById(`ingredientName${id}`);
+    ingredientName.value = name;
 
     const ingredientDelete = document.getElementById(`ingredientDelete${id}`);
     ingredientDelete.addEventListener("click", function() {
@@ -112,33 +121,14 @@ function filloutForm() {
         return;
     }
 
-    // Almost certainly can be improved
     let i = 0;
     if(Array.isArray(recipe.ingredientQuantity)) {
         for(; i < recipe.ingredientQuantity.length; ++i) {
-            newIngredient(i);
-            const ingredientQuantity = document.getElementById(`ingredientQuantity${i}`);
-            ingredientQuantity.value = recipe.ingredientQuantity[i];
-
-            const ingredientMeasurement = document.getElementById(`ingredientMeasurement${i}`);
-            ingredientMeasurement.value = recipe.ingredientMeasurement[i];
-
-            const ingredientName = document.getElementById(`ingredientName${i}`);
-            ingredientName.value = recipe.ingredientName[i];
+            newIngredient(i, recipe.ingredientQuantity[i], recipe.ingredientMeasurement[i], recipe.ingredientName[i]);
         }
     }
     else {
-        newIngredient(i);
-        const ingredientQuantity = document.getElementById(`ingredientQuantity${i}`);
-        ingredientQuantity.value = recipe.ingredientQuantity;
-
-        const ingredientMeasurement = document.getElementById(`ingredientMeasurement${i}`);
-        ingredientMeasurement.value = recipe.ingredientMeasurement;
-
-        const ingredientName = document.getElementById(`ingredientName${i}`);
-        ingredientName.value = recipe.ingredientName;
-
-        ++i;
+        newIngredient(i++, recipe.ingredientQuantity, recipe.ingredientMeasurement, recipe.ingredientName);
     }
 
     ingredientCounter = i;
@@ -147,17 +137,11 @@ function filloutForm() {
 /**
  * Loads the recipe data when the page loads.
  */
-function pageLoad() {
+async function pageLoad() {
     const searchParams = new URLSearchParams(window.location.search);
-    const xhr = new XMLHttpRequest();
-
-    xhr.addEventListener("load", function() {
-        recipe = JSON.parse(xhr.response);
-        filloutPage(recipe);
-    });
-
-    xhr.open("GET", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items/" + searchParams.get("recipe"));
-    xhr.send();
+    const response = await getRecipe(searchParams.get("recipe"));
+    recipe = JSON.parse(response);
+    filloutPage(recipe);
 }
 
 document.addEventListener("DOMContentLoaded", pageLoad);
@@ -168,7 +152,7 @@ document.addEventListener("DOMContentLoaded", pageLoad);
  */
 function addIngredientClicked(event) {
     event.preventDefault();
-    newIngredient(ingredientCounter++);
+    newIngredient(ingredientCounter++, null, null, null);
 }
 
 addIngredient.addEventListener("click", addIngredientClicked);
@@ -180,11 +164,8 @@ addIngredient.addEventListener("click", addIngredientClicked);
 function confirmRecipeClicked(event) {
     event.preventDefault();
 
-    let output = normalizeFormData(this);
-    const xhr = new XMLHttpRequest();
-    xhr.open("PUT", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify(output));
+    const output = normalizeFormData(this);
+    putRecipe(JSON.stringify(output));
 
     recipeData.setAttribute("hidden", true);
     this.reset();
@@ -246,14 +227,9 @@ function recipeDeleteClicked(event) {
     let res = confirm("Are you sure you want to delete this recipe?");
 
     if(res === true) {
-        const xhr = new XMLHttpRequest();
-
-        xhr.addEventListener("load", function() {
+        deleteRecipe(recipe.recipeName, function() {
             window.location.href = "/";
         });
-
-        xhr.open("DELETE", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items/" + recipe.recipeName);
-        xhr.send();
     }
 }
 

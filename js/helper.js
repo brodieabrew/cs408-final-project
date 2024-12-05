@@ -42,30 +42,6 @@ function normalizeFormData(formElement) {
 }
 
 /**
- * Checks if a recipe exists in the AWS database.
- * 
- * @param {String} recipeName The name of the recipe to check for
- * @returns {boolean} True if the recipe exists, false otherwise
- */
-async function recipeExists(recipeName) {
-    const xhr = new XMLHttpRequest();
-
-    return new Promise(function(resolve) {
-        xhr.addEventListener("load", function() {
-            if(xhr.response.length !== 0) {
-                resolve(true);
-            }
-            else {
-                resolve(false);
-            }
-        });
-
-        xhr.open("GET", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items/" + recipeName);
-        xhr.send();
-    });
-}
-
-/**
  * Adds a recipe card to the recipe display with a custom link.
  * 
  * @param {HTMLElement} recipeDisplay An HTML element for the recipe display
@@ -95,4 +71,63 @@ function addCard(recipeDisplay, recipe, link) {
     recipeDisplay.appendChild(mainDiv);
 }
 
-export{normalizeFormData, recipeExists, addCard};
+/**
+ * Puts a recipe into the database.
+ * @param {*} recipe The recipe to put into the database
+ */
+function putRecipe(recipe) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("PUT", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(recipe);
+}
+
+/**
+ * Deletes a recipe from the database.
+ * @param {String} recipeName The name of the recipe to delete
+ * @param {*} callback A callback function for when deletion finishes
+ */
+function deleteRecipe(recipeName, callback) {
+    const xhr = new XMLHttpRequest();
+
+    xhr.addEventListener("load", callback);
+    xhr.open("DELETE", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items/" + recipeName);
+    xhr.send();
+}
+
+/**
+ * Gets all recipes from the database.
+ * @returns {*} Returns the response body from requesting all recipes from the database
+ */
+async function getAllRecipes() {
+    const xhr = new XMLHttpRequest();
+
+    return new Promise(function(resolve) {
+        xhr.addEventListener("load", function() {
+            resolve(xhr.response);
+        });
+
+        xhr.open("GET", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items");
+        xhr.send();
+    });
+}
+
+/**
+ * Gets a recipe from the database.
+ * @param {String} recipeName The name of the recipe to get
+ * @returns {*} Returns the response body from requesting the recipe from the database
+ */
+async function getRecipe(recipeName) {
+    const xhr = new XMLHttpRequest();
+
+    return new Promise(function(resolve) {
+        xhr.addEventListener("load", function() {
+            resolve(xhr.response);
+        });
+
+        xhr.open("GET", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items/" + recipeName);
+        xhr.send();
+    });
+}
+
+export{normalizeFormData, addCard, putRecipe, deleteRecipe, getAllRecipes, getRecipe};

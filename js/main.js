@@ -1,4 +1,4 @@
-import { normalizeFormData, recipeExists, addCard } from "./helper.js";
+import { normalizeFormData, addCard, putRecipe, getAllRecipes, getRecipe } from "./helper.js";
 
 const recipeDataForm = document.getElementById("recipeData");
 const recipeDisplay = document.getElementById("recipeDisplay");
@@ -11,24 +11,19 @@ let recipeCount = 0;
 /**
  * Loads all recipe cards in the database on the page load.
  */
-function pageLoad() {
-    const xhr = new XMLHttpRequest();
-    xhr.addEventListener("load", function() {
-        const allRecipes = JSON.parse(xhr.response);
+async function pageLoad() {
+    const response = await getAllRecipes();
+    const allRecipes = JSON.parse(response);
 
-        for(const recipe of allRecipes) {
-            recipeTitle.innerText = `${++recipeCount} Food Recipes`;
-            addCard(recipeDisplay, recipe, "/pages/recipe.html?recipe=");
-        }
-    });
-
-    xhr.open("GET", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items");
-    xhr.send();
+    for(const recipe of allRecipes) {
+        recipeTitle.innerText = `${++recipeCount} Food Recipes`;
+        addCard(recipeDisplay, recipe, "/pages/recipe.html?recipe=");
+    }
 }
 
 document.addEventListener("DOMContentLoaded", pageLoad);
 
-// TODO: add tests to test.js, add styling
+// TODO: add tests to test.js, add styling, improve about page
 
 /**
  * Submits a recipe to the database if it doesn't exist already.
@@ -37,17 +32,14 @@ document.addEventListener("DOMContentLoaded", pageLoad);
 async function submitRecipe(event) {
     event.preventDefault();
 
-    let output = normalizeFormData(this);
-    let exists = await recipeExists(output.recipeName);
+    const output = normalizeFormData(this);
+    const response = await getRecipe(output.recipeName);
 
-    if(exists) {
+    if(response.length !== 0) {
         alert("A recipe with that name already exists!");
     }
     else {
-        const xhr = new XMLHttpRequest();
-        xhr.open("PUT", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items");
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(JSON.stringify(output));
+        putRecipe(JSON.stringify(output));
     
         recipeTitle.innerText = `${++recipeCount} Food Recipes`;
         addCard(recipeDisplay, output, "/pages/recipe.html?recipe=");

@@ -1,11 +1,18 @@
-import {sayHello} from '../js/main.js';
+import { normalizeFormData, recipeExists, addCard } from "./helper.js";
 
-QUnit.module('hello', function() {
+QUnit.module("Helper Functions", function() {
+    QUnit.test("Ensure that normalizing form data works", function(assert) {
 
-    QUnit.test('make sure the hello function says hello', function(assert) {
-        var result = sayHello();
-        assert.equal(result, 'hello');
     });
 
+    QUnit.test("Ensure that checking recipe existance works", function(assert) {
+        let recipe;
+        recipe.recipeName = "QUnitTest";
+        
+    });
 
+    QUnit.test("Ensure that adding cards work", function(assert) {
+
+    });
 });
+
