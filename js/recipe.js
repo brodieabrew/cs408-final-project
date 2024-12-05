@@ -1,6 +1,5 @@
 import { normalizeFormData } from "./helper.js";
 
-const recipeInfo = document.getElementById("recipeInfo");
 const recipeEdit = document.getElementById("recipeEdit");
 const recipeDelete = document.getElementById("recipeDelete");
 const title = document.getElementById("title");
@@ -11,9 +10,14 @@ const addIngredient = document.getElementById("addIngredient");
 const ingredientTemplate = document.getElementById("ingredientTemplate");
 const recipeIngredients = document.getElementById("recipeIngredients");
 const ingredients = document.getElementById("ingredients");
+const recipeTags = document.getElementById("recipeTags");
+const tags = document.getElementById("tags");
 
 let recipe = null;
 
+/**
+ * Fills out the page dynamically with the recipe data.
+ */
 function filloutPage() {
     document.title = recipe.recipeName;
     title.innerText = recipe.recipeName;
@@ -25,6 +29,21 @@ function filloutPage() {
     if(recipe.recipeInstructions != null) {
         const instructions = document.getElementById("instructions");
         instructions.innerText = recipe.recipeInstructions;
+    }
+
+    if(recipe.recipeTags != null) {
+        if(Array.isArray(recipe.recipeTags)) {
+            for(let i = 0; i < recipe.recipeTags.length; ++i) {
+                const tag = document.createElement("li");
+                tag.innerText = recipe.recipeTags[i];
+                tags.appendChild(tag);
+            }
+        }
+        else {
+            const tag = document.createElement("li");
+            tag.innerText = recipe.recipeTags;
+            tags.appendChild(tag);
+        }
     }
 
     if(recipe.ingredientQuantity == null || 
@@ -46,9 +65,15 @@ function filloutPage() {
         ingredient.innerText = recipe.ingredientQuantity + " " + recipe.ingredientMeasurement + " " + recipe.ingredientName;
         ingredients.appendChild(ingredient);
     }
+
 }
 
 // Credits: https://stackoverflow.com/a/69362263 
+
+/**
+ * Adds a new ingredient to the recipe form.
+ * @param {number} id A number representing part of the ingredient ID
+ */
 function newIngredient(id) {
     let div = document.createElement("div");
     div.classList.add("ingredient");
@@ -56,10 +81,18 @@ function newIngredient(id) {
 
     div.innerHTML = div.innerHTML.replaceAll("{i}", id);
     recipeIngredients.append(div);
+
+    const ingredientDelete = document.getElementById(`ingredientDelete${id}`);
+    ingredientDelete.addEventListener("click", function() {
+        recipeIngredients.removeChild(div);
+    });
 }
 
 let ingredientCounter = 0;
 
+/**
+ * Fills out the recipe form with existing data.
+ */
 function filloutForm() {
     const recipeName = document.getElementById("recipeName");
     recipeName.value = recipe.recipeName;
@@ -79,6 +112,7 @@ function filloutForm() {
         return;
     }
 
+    // Almost certainly can be improved
     let i = 0;
     if(Array.isArray(recipe.ingredientQuantity)) {
         for(; i < recipe.ingredientQuantity.length; ++i) {
@@ -110,6 +144,9 @@ function filloutForm() {
     ingredientCounter = i;
 }
 
+/**
+ * Loads the recipe data when the page loads.
+ */
 function pageLoad() {
     const searchParams = new URLSearchParams(window.location.search);
     const xhr = new XMLHttpRequest();
@@ -125,6 +162,10 @@ function pageLoad() {
 
 document.addEventListener("DOMContentLoaded", pageLoad);
 
+/**
+ * Adds a new ingredient to the form when clicked.
+ * @param {Event} event An HTML event
+ */
 function addIngredientClicked(event) {
     event.preventDefault();
     newIngredient(ingredientCounter++);
@@ -132,6 +173,10 @@ function addIngredientClicked(event) {
 
 addIngredient.addEventListener("click", addIngredientClicked);
 
+/**
+ * Submits the current recipe form to the server and updates the page.
+ * @param {Event} event An HTML event
+ */
 function confirmRecipeClicked(event) {
     event.preventDefault();
 
@@ -143,6 +188,8 @@ function confirmRecipeClicked(event) {
 
     recipeData.setAttribute("hidden", true);
     this.reset();
+
+    tags.innerHTML = "";
     recipeIngredients.innerHTML = "";
     ingredients.innerHTML = "";
     recipe = output;
@@ -155,11 +202,16 @@ function confirmRecipeClicked(event) {
 
 recipeData.addEventListener("submit", confirmRecipeClicked);
 
+/**
+ * Clears the form and reverts the page to normal.
+ * @param {Event} event An HTML event
+ */
 function cancelRecipeClicked(event) {
     event.preventDefault();
 
     recipeData.setAttribute("hidden", true);
     recipeData.reset();
+
     recipeIngredients.innerHTML = "";
 
     recipeEdit.removeAttribute("hidden");
@@ -168,6 +220,10 @@ function cancelRecipeClicked(event) {
 
 cancelRecipe.addEventListener("click", cancelRecipeClicked);
 
+/**
+ * Enables the recipe submission form.
+ * @param {Event} event An HTML event
+ */
 function recipeEditClicked(event) {
     event.preventDefault();
 
@@ -180,6 +236,10 @@ function recipeEditClicked(event) {
 
 recipeEdit.addEventListener("click", recipeEditClicked);
 
+/**
+ * Deletes the recipe from the server and redirects to the home page.
+ * @param {Event} event An HTML event
+ */
 function recipeDeleteClicked(event) {
     event.preventDefault();
 
@@ -187,10 +247,13 @@ function recipeDeleteClicked(event) {
 
     if(res === true) {
         const xhr = new XMLHttpRequest();
+
+        xhr.addEventListener("load", function() {
+            window.location.href = "/";
+        });
+
         xhr.open("DELETE", "https://83wvrq58ja.execute-api.us-east-2.amazonaws.com/items/" + recipe.recipeName);
         xhr.send();
-    
-        window.location.href = "/";
     }
 }
 

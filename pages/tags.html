@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Recipeek</title>
+    <meta name="description" content="The leading site for sharing and finding recipes!">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+
+  <body>
+    <nav class="banner">
+      <div class="flex">
+        <a href="/">
+          <img class="imageLink" src="/img/RecipeekLogo.png">
+        </a>
+        <a class="noDecoration home" href="/">
+          Recipeek
+        </a>
+        <ul class="flex bannerLinks">
+            <li>
+                <a class="bannerLink" href="/pages/tags.html">Search Recipes</a>
+            </li>
+            <li>
+                <a class="bannerLink" href="/pages/about.html">About</a>
+            </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="title">
+      <h1 class="center" id="recipeTitle">Search Recipes</h1>
+      <h3 class="center">Find your favorite recipe with ease</h3>
+    </div>
+
+    <div class="content">
+      <section class="cardContainer" id="recipeDisplay">
+      </section>
+  
+      <form id="searchRecipe">
+        <label for="recipeTag">Tag: </label>
+        <select id="recipeTag" name="recipeTag" required>
+          <option value="Baking">Baking</option>
+          <option value="Cooking">Cooking</option>
+          <option value="Grilling">Grilling</option>
+          <option value="Sweet">Sweet</option>
+          <option value="Savory">Savory</option>
+          <option value="Short">Short Duration</option>
+          <option value="Medium">Medium Duration</option>
+          <option value="Long">Long Duration</option>
+          <option value="Cheap">Cheap</option>
+          <option value="Expensive">Expensive</option>
+        </select>
+
+        <input type="submit" value="Search">
+      </form>
+    </div>
+
+
+    <script type="module" src="/js/tags.js"></script>
+  </body>
+
+</html>

@@ -1,18 +1,133 @@
 .flex {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: inherit;
   align-items: center;
 }
 
-.box {
-  width: 80%;
-  padding: 15px;
-}
-
-.left {
-  margin-left: auto;
-}
-
 .home {
-  justify-self: left;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.bannerLinks {
+  justify-content: space-between;
+  flex-direction: row;
+  margin-left: auto;
+  list-style-type: none;
+  align-items: center;
+}
+
+.bannerLink {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0 10px;
+  margin: 6px 0;
+  text-decoration: none;
+  color: black;
+}
+
+.imageLink {
+  width: 50px;
+  height: 50px;
+}
+
+.home:hover, .bannerLink:hover, .imageLink:hover {
+  opacity: 0.5;
+}
+
+.content {
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.noDecoration {
+  text-decoration: none;
+  color: black;
+}
+
+.cardContainer, .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  width: 30%;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.center {
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+}
+
+.banner {
+  position: fixed;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.title {
+  margin-top: 60px;
+  margin-bottom: 30px;
+}
+
+.stickyBar {
+  display: block;
+  flex: 0 0 auto;
+  position: sticky;
+  top: 100px;
+  z-index: 9998;
+  width: 24%;
+  border: 1px solid black;
+}
+
+.mainContent {
+  flex: 0 0 auto;
+  width: 75%;
+}
+
+.bgBlue {
+  background-color: lightblue;
+}
+
+.bgTan {
+  background-color: tan;
+}
+
+h1 {
+  font-weight: 900;
+  font-size: 50px;
+}
+
+.borderHeader {
+  border: 1px solid black;
+  border-left: none;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.ingredientHeader {
+  border-bottom: 1px solid black;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+h3 {
+  font-weight: 500;
 }

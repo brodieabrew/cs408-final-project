@@ -6,36 +6,53 @@
     <title>Recipeek</title>
     <meta name="description" content="The leading site for sharing and finding recipes!">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
   </head>
 
   <body>
-    <nav class="box flex">
-      <a class="home" href="/">Recipeek</a>
-      <div class="box flex left">
-        <a>About</a>
+    <nav class="banner">
+      <div class="flex">
+        <a href="/">
+          <img class="imageLink" src="/img/RecipeekLogo.png">
+        </a>
+        <a class="noDecoration home" href="/">
+          Recipeek
+        </a>
+        <ul class="flex bannerLinks">
+          <li>
+            <a class="bannerLink" href="/pages/tags.html">Search Recipes</a>
+          </li>
+          <li>
+            <a class="bannerLink" href="/pages/about.html">About</a>
+          </li>
+        </ul>
       </div>
-
     </nav>
 
-    <h1>All Recipes:</h1>
-    <section id="recipeDisplay">
+    <div class="title">
+      <h1 class="center" id="recipeTitle">Food Recipes</h1>
+      <h3 class="center">All of your favorite recipes in one place</h3>
+    </div>
 
-    </section>
+    <div class="content">
+      <section class="cardContainer" id="recipeDisplay">
+      </section>
+  
+      <form id="recipeData" hidden>
+        <legend>New Recipe</legend>
+  
+        <label for="recipeName">Recipe Name: </label>
+        <input type="text" id="recipeName" name="recipeName" placeholder="Grandma's Cookies" required>
+        <label for="recipeDescription">Description: </label>
+        <textarea id="recipeDescription" name="recipeDescription" rows="2" cols="20" required></textarea>
+  
+        <input class="submitRecipe" type="submit" value="Confirm">
+        <button type="button" id="cancelRecipe">Cancel</button>
+      </form>
+  
+      <button type="button" id="createRecipe">New Recipe</button>
+    </div>
 
-    <form id="recipeData" hidden>
-      <legend>New Recipe</legend>
-
-      <label for="recipeName">Recipe Name: </label>
-      <input type="text" id="recipeName" name="recipeName" placeholder="Grandma's Cookies" required>
-      <label for="recipeDescription">Description: </label>
-      <textarea id="recipeDescription" name="recipeDescription" rows="2" cols="20" required></textarea>
-
-      <input class="submitRecipe" type="submit" value="Confirm">
-      <button type="button" id="cancelRecipe">Cancel</button>
-    </form>
-
-    <button type="button" id="createRecipe">New Recipe</button>
 
     <script type="module" src="js/main.js"></script>
   </body>

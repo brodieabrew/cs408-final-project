@@ -1,21 +1,24 @@
-import { normalizeFormData, recipeExists } from "./helper.js";
+import { normalizeFormData, recipeExists, addCard } from "./helper.js";
 
 const recipeDataForm = document.getElementById("recipeData");
 const recipeDisplay = document.getElementById("recipeDisplay");
 const createRecipe = document.getElementById("createRecipe");
 const cancelRecipe = document.getElementById("cancelRecipe");
+const recipeTitle = document.getElementById("recipeTitle");
 
+let recipeCount = 0;
+
+/**
+ * Loads all recipe cards in the database on the page load.
+ */
 function pageLoad() {
     const xhr = new XMLHttpRequest();
     xhr.addEventListener("load", function() {
         const allRecipes = JSON.parse(xhr.response);
-        for(const recipe of allRecipes) {
-            let newLink = document.createElement("a");
-            newLink.setAttribute("href", "pages/recipe.html?recipe=" + recipe.recipeName);
-            newLink.innerText = recipe.recipeName;
 
-            recipeDisplay.appendChild(newLink);
-            recipeDisplay.appendChild(document.createElement("br"));
+        for(const recipe of allRecipes) {
+            recipeTitle.innerText = `${++recipeCount} Food Recipes`;
+            addCard(recipeDisplay, recipe, "/pages/recipe.html?recipe=");
         }
     });
 
@@ -25,10 +28,12 @@ function pageLoad() {
 
 document.addEventListener("DOMContentLoaded", pageLoad);
 
-// TODO: Add function comments, add more pages,
-// make the first page only display the recipe name and description
-// add tests to test.js, add styling
+// TODO: add tests to test.js, add styling
 
+/**
+ * Submits a recipe to the database if it doesn't exist already.
+ * @param {SubmitEvent} event An HTML submit event
+ */
 async function submitRecipe(event) {
     event.preventDefault();
 
@@ -44,12 +49,8 @@ async function submitRecipe(event) {
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify(output));
     
-        let newLink = document.createElement("a");
-        newLink.setAttribute("href", "pages/recipe.html?recipe=" + output.recipeName);
-        newLink.innerText = output.recipeName;
-
-        recipeDisplay.appendChild(newLink);
-        recipeDisplay.appendChild(document.createElement("br"));
+        recipeTitle.innerText = `${++recipeCount} Food Recipes`;
+        addCard(recipeDisplay, output, "/pages/recipe.html?recipe=");
 
         this.reset();
 
@@ -60,6 +61,10 @@ async function submitRecipe(event) {
 
 recipeDataForm.addEventListener("submit", submitRecipe);
 
+/**
+ * Enables the recipe submission form and hides the create recipe button.
+ * @param {Event} event An HTML event
+ */
 function createRecipeClicked(event) {
     event.preventDefault();
 
@@ -69,6 +74,10 @@ function createRecipeClicked(event) {
 
 createRecipe.addEventListener("click", createRecipeClicked);
 
+/**
+ * Disables and clears the recipe submission form and shows the create recipe button.
+ * @param {Event} event An HTML event
+ */
 function cancelRecipeClicked(event) {
     event.preventDefault();
 

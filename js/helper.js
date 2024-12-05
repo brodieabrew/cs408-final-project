@@ -1,4 +1,12 @@
 // Credits: https://stackoverflow.com/questions/41431322/how-to-convert-formdata-html5-object-to-json/49826736#49826736
+
+/**
+ * Normalizes form data by creating a JavaScript JSON object with
+ * certain properties combined into arrays.
+ * 
+ * @param {HTMLFormElement} formElement The form element to normalize
+ * @returns {*} The normalized form data
+ */
 function normalizeFormData(formElement) {
     const entries = new FormData(formElement).entries();
     let output = {};
@@ -33,6 +41,12 @@ function normalizeFormData(formElement) {
     return output;
 }
 
+/**
+ * Checks if a recipe exists in the AWS database.
+ * 
+ * @param {String} recipeName The name of the recipe to check for
+ * @returns {boolean} True if the recipe exists, false otherwise
+ */
 async function recipeExists(recipeName) {
     const xhr = new XMLHttpRequest();
 
@@ -51,4 +65,34 @@ async function recipeExists(recipeName) {
     });
 }
 
-export{normalizeFormData, recipeExists};
+/**
+ * Adds a recipe card to the recipe display with a custom link.
+ * 
+ * @param {HTMLElement} recipeDisplay An HTML element for the recipe display
+ * @param {*} recipe The recipe data to display
+ * @param {String} link The link to redirect to
+ */
+function addCard(recipeDisplay, recipe, link) {
+    let newLink = document.createElement("a");
+    newLink.setAttribute("href", link + recipe.recipeName);
+    newLink.classList.add("noDecoration");
+
+    let mainDiv = document.createElement("div");
+    mainDiv.classList.add("card");
+
+    let innerDiv = document.createElement("div");
+    let header = document.createElement("h2");
+    header.innerText = recipe.recipeName;
+
+    let paragraph = document.createElement("p");
+    paragraph.innerText = recipe.recipeDescription;
+
+    innerDiv.appendChild(header);
+    innerDiv.appendChild(paragraph);
+    newLink.appendChild(innerDiv);
+
+    mainDiv.appendChild(newLink);
+    recipeDisplay.appendChild(mainDiv);
+}
+
+export{normalizeFormData, recipeExists, addCard};

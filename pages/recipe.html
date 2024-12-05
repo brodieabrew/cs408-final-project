@@ -4,60 +4,105 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 
     <body>
-        <nav class="box flex">
-            <a class="home" href="../index.html">Recipeek</a>
-            <div class="box flex left">
-              <a>About</a>
-            </div>
-      
-        </nav>
+      <nav class="banner">
+        <div class="flex">
+          <a href="/">
+            <img class="imageLink" src="/img/RecipeekLogo.png">
+          </a>
+          <a class="noDecoration home" href="/">
+            Recipeek
+          </a>
+          <ul class="flex bannerLinks">
+            <li>
+              <a class="bannerLink" href="/pages/tags.html">Search Recipes</a>
+            </li>
+            <li>
+              <a class="bannerLink" href="/pages/about.html">About</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+  
+      <div class="title">
+        <h1 class="center" id="title"></h1>
+        <h3 class="center" id="description"></h3>
+      </div>
 
-        <template id="ingredientTemplate">
-          <label for="ingredientQuantity{i}">Quantity: </label>
-          <input type="number" id="ingredientQuantity{i}" name="ingredientQuantity{i}" step="0.01" min="0.01" required>
-    
-          <label for="ingredientMeasurement{i}">Measurement: </label>
-          <input type="text" id="ingredientMeasurement{i}" name="ingredientMeasurement{i}" required>
-    
-          <label for="ingredientName{i}">Name: </label>
-          <input type="text" id="ingredientName{i}" name="ingredientName{i}" required>
-        </template>
-
-        <article id="recipeInfo">
-          <h1 id="title"></h1>
-          <p id="description"></p>
-          <p id="instructions"></p>
+      <div class="content container">
+        <div class="stickyBar bgTan">
+          <h2 class="center ingredientHeader">Ingredients</h2>
           <ul id="ingredients">
 
           </ul>
-        </article>
+        </div>
 
-        <form id="recipeData" hidden>
-          <legend>Edit Recipe</legend>
-          <label for="recipeName">Recipe Name: </label>
-          <input type="text" id="recipeName" name="recipeName" readonly>
-    
-          <label for="recipeDescription">Description: </label>
-          <textarea id="recipeDescription" name="recipeDescription" rows="2" cols="20" required></textarea>
+        <div class="mainContent">
+          <h2 class="center bgBlue borderHeader">Instructions</h2>
+          <p id="instructions"></p>
+        </div>
 
-          <label for="recipeInstructions">Instructions: </label>
-          <textarea id="recipeInstructions" name="recipeInstructions" rows="4" cols="50" required></textarea>
-    
-          <div id="recipeIngredients">
-    
-          </div>
+        <div>
+          <h3>Tags:</h3>
+          <ul id="tags">
 
-          <button type="button" id="addIngredient">Add Ingredient</button>
-          <input class="submitRecipe" type="submit" value="Confirm">
-          <button type="button" id="cancelRecipe">Cancel</button>
-        </form>
+          </ul>
+        </div>
+      </div>
 
-        <button type="button" id="recipeEdit">Edit</button>
-        <button type="button" id="recipeDelete">Delete</button>
+      <template id="ingredientTemplate">
+        <label for="ingredientQuantity{i}">Quantity: </label>
+        <input type="number" id="ingredientQuantity{i}" name="ingredientQuantity{i}" step="0.01" min="0.01" required>
+  
+        <label for="ingredientMeasurement{i}">Measurement: </label>
+        <input type="text" id="ingredientMeasurement{i}" name="ingredientMeasurement{i}" required>
+  
+        <label for="ingredientName{i}">Name: </label>
+        <input type="text" id="ingredientName{i}" name="ingredientName{i}" required>
 
-        <script type="module" src="../js/recipe.js"></script>
+        <button id="ingredientDelete{i}" type="button">Delete</button>
+      </template>
+
+      <form id="recipeData" hidden>
+        <legend>Edit Recipe</legend>
+        <label for="recipeName">Recipe Name: </label>
+        <input type="text" id="recipeName" name="recipeName" readonly>
+  
+        <label for="recipeDescription">Description: </label>
+        <textarea id="recipeDescription" name="recipeDescription" rows="2" cols="20" required></textarea>
+
+        <label for="recipeInstructions">Instructions: </label>
+        <textarea id="recipeInstructions" name="recipeInstructions" rows="4" cols="50" required></textarea>
+  
+        <div id="recipeIngredients">
+  
+        </div>
+
+        <!-- Allow dynamic tag inputs in the future -->
+        <label for="recipeTags">Tags: </label>
+        <select id="recipeTags" name="recipeTags" multiple required>
+          <option value="Baking">Baking</option>
+          <option value="Cooking">Cooking</option>
+          <option value="Grilling">Grilling</option>
+          <option value="Sweet">Sweet</option>
+          <option value="Savory">Savory</option>
+          <option value="Short">Short Duration</option>
+          <option value="Medium">Medium Duration</option>
+          <option value="Long">Long Duration</option>
+          <option value="Cheap">Cheap</option>
+          <option value="Expensive">Expensive</option>
+        </select>
+
+        <button type="button" id="addIngredient">Add Ingredient</button>
+        <input class="submitRecipe" type="submit" value="Confirm">
+        <button type="button" id="cancelRecipe">Cancel</button>
+      </form>
+
+      <button type="button" id="recipeEdit">Edit</button>
+      <button type="button" id="recipeDelete">Delete</button>
+
+      <script type="module" src="../js/recipe.js"></script>
     </body>
 </html>
