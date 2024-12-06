@@ -2,22 +2,18 @@ body {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.stickyBar {
-    display: block;
-    flex: 0 0 auto;
-    position: sticky;
-    top: 100px;
-    z-index: 9998;
-    width: 24%;
-    border: 1px solid black;
-  }
-
 .bgBlue {
     background-color: lightblue;
   }
   
 .bgTan {
     background-color: tan;
+}
+
+.ingredientPane {
+    background-color: tan;
+    width: 24%;
+    border: 1px solid black;
 }
 
 .mainContent {
