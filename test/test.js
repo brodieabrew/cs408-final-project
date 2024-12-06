@@ -52,7 +52,6 @@ QUnit.module("Helper Functions", function() {
     });
 
     QUnit.test("Ensure that adding cards work", function(assert) {
-        //const recipeDisplay = document.getElementById("recipeDisplay");
         let output = {};
         output.recipeName = "QUnitCardTestOne";
         output.recipeDescription = "QUnitCardTestTwo";
@@ -70,6 +69,8 @@ QUnit.module("Helper Functions", function() {
 
         assert.equal(output.recipeName, header.innerText);
         assert.equal(output.recipeDescription, paragraph.innerText);
+
+        recipeDisplay.removeChild(recipeDisplay.lastChild);
     });
 
     QUnit.test("Ensure that putting a recipe works", async function(assert) {
@@ -82,7 +83,7 @@ QUnit.module("Helper Functions", function() {
 
         assert.equal(output.recipeName, recipe.recipeName);
 
-        await deleteRecipe(output.recipeName, null);
+        await deleteRecipe(output.recipeName);
     });
 
     QUnit.test("Ensure that deleting a recipe works", async function(assert) {
@@ -90,7 +91,7 @@ QUnit.module("Helper Functions", function() {
         output.recipeName = "QUnitDeleteTest";
         await putRecipe(JSON.stringify(output));
 
-        await deleteRecipe(output.recipeName, null);
+        await deleteRecipe(output.recipeName);
 
         const response = await getRecipe(output.recipeName);
         assert.equal(0, response.length);
@@ -118,8 +119,8 @@ QUnit.module("Helper Functions", function() {
         }
         assert.equal(2, count);
 
-        await deleteRecipe(output.recipeName, null);
-        await deleteRecipe(output2.recipeName, null)
+        await deleteRecipe(output.recipeName);
+        await deleteRecipe(output2.recipeName);
     });
 
     QUnit.test("Ensure that getting a recipe works", async function(assert) {
@@ -132,11 +133,70 @@ QUnit.module("Helper Functions", function() {
 
         assert.equal(output.recipeName, recipe.recipeName);
 
-        await deleteRecipe(output.recipeName, null);
+        await deleteRecipe(output.recipeName);
     });
 });
 
 QUnit.module("Main Functions", function() {
+
+    QUnit.test("Ensure that page loading works", async function(assert) {
+        let output = {};
+        output.recipeName = "QUnitPageLoadTestOne";
+        await putRecipe(JSON.stringify(output));
+
+        let output2 = {};
+        output2.recipeName = "QUnitPageLoadTestTwo";
+        await putRecipe(JSON.stringify(output2));
+
+        pageLoad();
+
+        const response = await getAllRecipes();
+        const recipes = JSON.parse(response);
+
+        assert.equal(recipeDisplay.children.length, recipes.length);
+
+        await deleteRecipe(output.recipeName);
+        await deleteRecipe(output2.recipeName);
+    });
+
+    QUnit.test("Eunsure submitting recipe works", async function(assert) {
+        const testForm = document.getElementById("testForm");
+        testForm.onsubmit = submitRecipe;
+        
+        const testData = testForm[0];
+        const savedValue = testData.value;
+        testData.value = "QUnitSubmitTest";
+
+        recipePopup.style.display = "block"; 
+
+        let count = recipeDisplay.children.length + 1;
+        await testForm.onsubmit(null);
+        assert.equal(recipeDisplay.children.length, count);
+        assert.equal(recipePopup.style.display, "none");
+        assert.equal(testData.value, "testName");
+
+        testData.value = "QUnitSubmitTest";
+        recipePopup.style.display = "block";
+
+        let alerted = false;
+
+        const savedAlert = window.alert;
+        window.alert = function() {
+            alerted = true;
+            window.alert = savedAlert;
+        }
+
+        await testForm.onsubmit(null);
+
+        assert.equal(recipeDisplay.children.length, count);
+        assert.equal(recipePopup.style.display, "block");
+        assert.equal(testData.value, "QUnitSubmitTest");
+        assert.true(alerted);
+
+        recipeDisplay.removeChild(recipeDisplay.lastChild);
+        testData.value = savedValue;
+        await deleteRecipe("QUnitSubmitTest");
+    });
 
     QUnit.test("Ensure creating a recipe works", function(assert) {
         recipePopup.style.display = "none";
@@ -156,3 +216,5 @@ QUnit.module("Main Functions", function() {
         assert.equal(testData.value, "");
     });
 });
+
+document.removeEventListener("DOMContentLoaded", pageLoad);

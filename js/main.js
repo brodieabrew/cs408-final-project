@@ -24,14 +24,14 @@ async function pageLoad() {
 
 document.addEventListener("DOMContentLoaded", pageLoad);
 
-// TODO: add tests to test.js, add styling, improve about page
-
 /**
  * Submits a recipe to the database if it doesn't exist already.
  * @param {SubmitEvent} event An HTML submit event
  */
 async function submitRecipe(event) {
-    event.preventDefault();
+    if(event != null) {
+        event.preventDefault();
+    }
 
     const output = normalizeFormData(this);
     const response = await getRecipe(output.recipeName);
