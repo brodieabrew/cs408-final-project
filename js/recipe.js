@@ -224,3 +224,5 @@ async function recipeDeleteClicked(event) {
 }
 
 recipeDelete.addEventListener("click", recipeDeleteClicked);
+
+export { pageLoad, title, recipe, addIngredient, recipeData, cancelRecipe, recipeEdit, recipeDelete};

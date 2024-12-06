@@ -1,62 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/recipe.css">
+    <title>QUnit</title>
+    <meta name="description" content="QUnit">
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.21.0.css">
+<body>
+  <div id="qunit">
+  </div>
 
-    <body>
-      <nav class="banner">
-        <div class="flex">
-          <a href="/">
-            <img class="imageLink" src="/img/RecipeekLogo.png">
-          </a>
-          <a class="noDecoration home" href="/">
-            Recipeek
-          </a>
-          <ul class="flex bannerLinks">
-            <li>
-              <a class="bannerLink" href="/pages/tags.html">Search Recipes</a>
-            </li>
-            <li>
-              <a class="bannerLink" href="/pages/about.html">About</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-  
-      <div class="title">
-        <h1 class="center" id="title"></h1>
-        <h3 class="center" id="description"></h3>
-      </div>
+  <div id="qunit-fixture">
+    <h1 class="center" id="title"></h1>
+    <h3 class="center" id="description"></h3>
 
-      <div class="content container">
-        <div class="stickyBar bgTan">
-          <h2 class="center ingredientHeader">Ingredients</h2>
-          <ul id="ingredients">
+    <ul id="ingredients">
 
-          </ul>
-        </div>
+    </ul>
+    <p id="instructions" class="instructions"></p>
+    <ul id="tags" class="tags">
 
-        <div class="mainContent">
-          <h2 class="center bgBlue borderHeader">Instructions</h2>
-          <p id="instructions" class="instructions"></p>
-        </div>
+    </ul>
 
-        <div class="container justifyLeft">
-          <h3>Tags:</h3>
-          <ul id="tags" class="tags">
+    <button type="button" id="recipeEdit">Edit</button>
+    <button type="button" id="recipeDelete">Delete</button>
 
-          </ul>
-        </div>
-
-        <button type="button" id="recipeEdit">Edit</button>
-        <button type="button" id="recipeDelete">Delete</button>
-      </div>
-
-      <template id="ingredientTemplate">
+    <template id="ingredientTemplate">
         <label for="ingredientQuantity{i}">Quantity: </label>
         <input type="number" id="ingredientQuantity{i}" name="ingredientQuantity{i}" step="0.01" min="0.01" required>
   
@@ -111,7 +78,9 @@
           </div>
         </div>
       </div>
+  </div>
 
-      <script type="module" src="../js/recipe.js"></script>
-    </body>
+  <script src="https://code.jquery.com/qunit/qunit-2.21.0.js"></script>
+  <script type="module" src="recipeTest.js"></script>
+</body>
 </html>
